@@ -1,10 +1,15 @@
 package com.ywm.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.ywm.CheckItemService;
+import com.ywm.constant.MessageConstant;
 import com.ywm.dao.CheckItemDao;
 import com.ywm.entity.PageResult;
 import com.ywm.entity.QueryPageBean;
+import com.ywm.exception.HealthException;
 import com.ywm.pojo.CheckItem;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,62 +37,47 @@ public class CheckItemServiceImpl implements CheckItemService {
 
     //添加检查项
     @Override
-    public boolean add(CheckItem checkItem) {
-        int rows = checkItemDao.add(checkItem);
-        return rows > 0;
+    public void add(CheckItem checkItem) {
+        checkItemDao.add(checkItem);
     }
 
     //删检查项
     @Override
-    public boolean deleteById(Integer id) {
-        int rows = checkItemDao.deleteById(id);
-        return rows > 0;
+    public void deleteById(int id) {
+
+        //判断是否关联检查组
+        int rows = checkItemDao.findCountByCheckItemId(id);
+        if (rows>0) {
+            throw new HealthException(MessageConstant.CHECKITEM_IN_USE);
+        }
+
+        //没有则直接删除
+        checkItemDao.deleteById(id);
     }
 
     //分页查检查项
     @Override
     public PageResult<CheckItem> findPage(QueryPageBean queryPageBean) {
 
-//        //第二种，Mapper接口方式的调用，推荐这种使用方式。
-//        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
-//        // 模糊查询 拼接 %
-//        // 判断是否有查询条件
-//        if(!StringUtils.isEmpty(queryPageBean.getQueryString())){
-//            // 有查询条件，拼接%
-//            queryPageBean.setQueryString("%" + queryPageBean.getQueryString() + "%");
-//        }
-//        // 紧接着的查询语句会被分页
-//        Page<CheckItem> page = checkItemDao.findByCondition(queryPageBean.getQueryString());
-//        // 封装到分页结果对象中
-//        PageResult<CheckItem> pageResult = new PageResult<CheckItem>(page.getTotal(), page.getResult());
-//        return pageResult;
-
-
-
-        //第一种 未完待续.........
-        String queryString = queryPageBean.getQueryString();
-
-        //获得总数
-        int total = checkItemDao.getTotal();
-
-        int currentPage = queryPageBean.getCurrentPage();
-        Integer pageSize = Integer.valueOf(queryPageBean.getPageSize());
-
-        Integer param = Integer.valueOf((currentPage-1)*pageSize);
-
-
-        List<CheckItem> list = checkItemDao.findPage( param, pageSize);
-
-        PageResult pageResult = new PageResult();
-        pageResult.setRows(list);
-        pageResult.setTotal(Long.valueOf(total));
-
+        //第二种，Mapper接口方式的调用，推荐这种使用方式。
+        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
+        // 模糊查询 拼接 %
+        // 判断是否有查询条件
+        if(!StringUtils.isEmpty(queryPageBean.getQueryString())){
+            // 有查询条件，拼接%
+            queryPageBean.setQueryString("%" + queryPageBean.getQueryString() + "%");
+        }
+        // 紧接着的查询语句会被分页
+        Page<CheckItem> page = checkItemDao.findByCondition(queryPageBean.getQueryString());
+        // 封装到分页结果对象中
+        PageResult<CheckItem> pageResult = new PageResult<CheckItem>(page.getTotal(), page.getResult());
         return pageResult;
+
+        //第一种
     }
     //改检查项
     @Override
-    public boolean update(CheckItem checkItem) {
-        int rows = checkItemDao.update(checkItem);
-        return rows>0;
+    public void update(CheckItem checkItem) {
+        checkItemDao.update(checkItem);
     }
 }

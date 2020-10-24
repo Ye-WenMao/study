@@ -30,7 +30,7 @@
             <div class="filter-container">
                 <el-input placeholder="项目编码/项目名称" v-model="pagination.queryString" style="width: 200px;"
                           class="filter-item"></el-input>
-                <el-button @click="findPage()" class="dalfBut">查询</el-button>
+                <el-button @click="handleCurrentChange(1)" class="dalfBut">查询</el-button>
                 <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
             </div>
             <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
@@ -52,18 +52,16 @@
                 </el-table-column>
             </el-table>
             <div class="pagination-container">
-
                 <el-pagination
                         class="pagiantion"
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
-                        :current-page="currentPage4"
+                        :current-page="pagination.currentPage"
                         :page-sizes="[10, 20, 30, 40,100]"
                         :page-size="10"
                         layout="total, sizes, prev, pager, next, jumper"
                         :total="pagination.total">
                 </el-pagination>
-
             </div>
             <!-- 新增标签弹层 -->
             <div class="add-form">
@@ -220,7 +218,7 @@
             pagination: {//分页相关模型数据
                 currentPage: 1,//当前页码
                 pageSize: 10,//每页显示的记录数
-                total: "",//总记录数
+                total: 2,//总记录数
                 queryString: null//查询条件
             },
             dataList: [],//当前页要展示的分页列表数据
@@ -328,14 +326,34 @@
             },
             // 删除
             handleDelete(row) {
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
 
-                console.log(JSON.stringify(row));
-                axios.post("/checkitem/deleteById.do",row).then(res => {
-                    if (res.data.flag) {
-                        this.findPage();
-                    }
+                    axios.post("/checkitem/deleteById.do?id="+row.id).then(res => {
 
-                })
+                        if (res.data.flag) {
+                            this.findPage();
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                message: res.data.message
+                            });
+                        }
+                    });
+
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
 
             }
         }

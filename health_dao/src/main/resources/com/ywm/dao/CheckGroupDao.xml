@@ -8,12 +8,44 @@
 -->
 <mapper namespace="com.ywm.dao.CheckGroupDao">
 
-    <select id="getTotal" resultType="java.lang.Integer">
-        select count(*) from t_checkgroup
-    </select>
-    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-    <select id="findPage" resultType="com.ywm.pojo.CheckGroup">
-        select * from t_checkgroup
+    <insert id="add" keyProperty="id" useGeneratedKeys="true">
+        insert into t_checkgroup (code,name,helpCode,sex,remark,attention)
+        values (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
+    </insert>
+
+    <insert id="addCheckGroupCheckItem">
+        insert into t_checkgroup_checkitem (checkgroup_id, checkitem_id)
+        values (#{checkGroupId}, #{checkitemId})
+    </insert>
+    <update id="update">
+        update t_checkgroup
+        set
+            code=#{code},
+            name=#{name},
+            helpCode=#{helpCode},
+            sex=#{sex},
+            remark=#{remark},
+            attention=#{attention}
+        where id=#{id}
+    </update>
+
+    <select id="findByCondition" resultType="com.ywm.pojo.CheckGroup">
+        select * From t_checkgroup
+        <if test="value !=null and value.length > 0">
+            where code like #{value} or name like #{value} or helpCode like #{value}
+        </if>
     </select>
 
+    <select id="findSetmealCountByCheckGroupId" parameterType="int" resultType="java.lang.Integer">
+        select count(1) from t_setmeal_checkgroup where checkgroup_id = #{id}
+    </select>
+    <select id="findCheckItemIdsByCheckGroupId" resultType="java.lang.Integer">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id=#{checkGroupId}
+    </select>
+    <delete id="deleteCheckGroupCheckItem" parameterType="int">
+        delete from t_setmeal_checkgroup where checkgroup_id= #{id}
+    </delete>
+    <delete id="deleteById" parameterType="int">
+        delete from t_checkgroup where id = #{id}
+    </delete>
 </mapper>

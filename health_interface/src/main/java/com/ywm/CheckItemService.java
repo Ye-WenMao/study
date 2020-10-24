@@ -2,6 +2,7 @@ package com.ywm;
 
 import com.ywm.entity.PageResult;
 import com.ywm.entity.QueryPageBean;
+import com.ywm.exception.HealthException;
 import com.ywm.pojo.CheckItem;
 
 import java.util.List;
@@ -19,13 +20,13 @@ public interface CheckItemService {
     List<CheckItem> findAll();
 
     //添加检查项
-    boolean add(CheckItem checkItem);
+    void add(CheckItem checkItem);
 
     //删检查项
-    boolean deleteById(Integer id);
+    void deleteById(int id) throws HealthException;
 
     //改检查项
-    boolean update(CheckItem checkItem);
+    void update(CheckItem checkItem);
     //分页查检查项
     PageResult<CheckItem> findPage(QueryPageBean queryPageBean);
 }
