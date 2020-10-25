@@ -21,7 +21,6 @@ public interface CheckGroupDao {
     //判断检查组是否被套餐使用
     int findSetmealCountByCheckGroupId(int id);
 
-
     //删除检查组
     void deleteById(int id);
 
@@ -34,4 +33,6 @@ public interface CheckGroupDao {
     //建立新关系
     void addCheckGroupCheckItem(@Param("groupId") Integer groupId, @Param("checkitemId") Integer checkitemId);
 
+    //查所有
+    List<CheckGroup> findAll();
 }

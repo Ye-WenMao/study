@@ -27,4 +27,8 @@ public interface CheckGroupService {
 
     //修改检查组
     void uptate(CheckGroup checkGroup, Integer[] checkitemIds);
+
+    //查询所有
+    List<CheckGroup> findAll();
+
 }

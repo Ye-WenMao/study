@@ -15,7 +15,7 @@
 
     <insert id="addCheckGroupCheckItem">
         insert into t_checkgroup_checkitem (checkgroup_id, checkitem_id)
-        values (#{checkGroupId}, #{checkitemId})
+        values (#{groupId}, #{checkitemId})
     </insert>
     <update id="update">
         update t_checkgroup
@@ -42,8 +42,11 @@
     <select id="findCheckItemIdsByCheckGroupId" resultType="java.lang.Integer">
         select checkitem_id from t_checkgroup_checkitem where checkgroup_id=#{checkGroupId}
     </select>
+    <select id="findAll" resultType="com.ywm.pojo.CheckGroup">
+        select * from t_checkgroup
+    </select>
     <delete id="deleteCheckGroupCheckItem" parameterType="int">
-        delete from t_setmeal_checkgroup where checkgroup_id= #{id}
+        delete from t_checkgroup_checkitem where checkgroup_id= #{id}
     </delete>
     <delete id="deleteById" parameterType="int">
         delete from t_checkgroup where id = #{id}
