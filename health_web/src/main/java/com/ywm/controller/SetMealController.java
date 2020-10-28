@@ -48,7 +48,15 @@ public class SetMealController {
     @PostMapping("/upload")
     public Result upload(@RequestBody MultipartFile imgFile) {
 
-        //
+
+        //回显图片数据封装
+        Map<String, String> dataMap = new HashMap<String, String>();
+        dataMap.put("domain", QiNiuUtils.DOMAIN);
+
+        //判断
+        if (null == imgFile) {
+            return new Result(true,"回显图片地址",dataMap);
+        }
         String originalFilename = imgFile.getOriginalFilename();
         //获取图片的后缀名 .jpg
         String extend = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -62,11 +70,7 @@ public class SetMealController {
             return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
         }
 
-        //回显图片数据封装
-        Map<String, String> dataMap = new HashMap<String, String>();
         dataMap.put("imgName", uniqueName);
-        dataMap.put("domain", QiNiuUtils.DOMAIN);
-
         return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, dataMap);
     }
 

@@ -14,6 +14,8 @@
         <module>health_interface</module>
         <module>health_service</module>
         <module>health_web</module>
+        <module>health_job</module>
+        <module>health_mobile</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -37,6 +39,7 @@
         <poi.version>3.14</poi.version>
         <jedis.version>2.9.0</jedis.version>
         <quartz.version>2.2.1</quartz.version>
+        <freemarker.version>2.3.23</freemarker.version>
     </properties>
     <!-- 依赖管理标签  必须加 -->
     <dependencyManagement>
@@ -199,6 +202,23 @@
                 <artifactId>spring-security-taglibs</artifactId>
                 <version>${spring.security.version}</version>
             </dependency>
+            <!--阿里云服务器短信平台-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <!-- 静态页面 -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -207,6 +227,14 @@
             <artifactId>servlet-api</artifactId>
             <version>${servlet-api.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
     </dependencies>
     <build>

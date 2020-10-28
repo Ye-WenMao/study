@@ -30,5 +30,4 @@ public interface CheckGroupService {
 
     //查询所有
     List<CheckGroup> findAll();
-
 }

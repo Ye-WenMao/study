@@ -115,4 +115,33 @@ public class SetMealServiceImpl implements SetMealService {
         }
 
     }
+
+    @Override
+    public List<String> findImg() {
+        return setMealDao.findImg();
+    }
+
+    /**
+     * 查询所有的套餐
+     * @return
+     */
+    @Override
+    public List<Setmeal> findAll() {
+        return setMealDao.findAll();
+    }
+
+    /**
+     * 查询套餐详情
+     * @param id
+     * @return
+     */
+    @Override
+    public Setmeal findDetailById(int id) {
+        return setMealDao.findDetailById(id);
+    }
+
+    @Override
+    public Setmeal findById(int id) {
+        return setMealDao.findById(id);
+    }
 }

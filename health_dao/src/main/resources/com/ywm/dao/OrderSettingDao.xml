@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace="Dao接口的全限定名"
+-->
+<mapper namespace="com.ywm.dao.OrderSettingDao">
+    <insert id="addOrder">
+         insert into t_ordersetting (orderDate,number,reservations)
+         values(#{orderDate},#{number}, #{reservations})
+    </insert>
+    <update id="updateOrderNumber">
+        update t_ordersetting set number=#{number} where orderDate = #{orderDate}
+    </update>
+
+    <select id="findByOrderDate" resultType="com.ywm.pojo.OrderSetting">
+        select * From t_orderSetting where orderDate = #{orderDate}
+    </select>
+    <!--根据月份查询预约设置信息-->
+    <select id="getOrderSettingByMonth"
+            parameterType="map"
+            resultType="OrderSetting">
+    select * from t_ordersetting where orderDate between #{dateBegin} and #{dateEnd}
+</select>
+</mapper>

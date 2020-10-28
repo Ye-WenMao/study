@@ -33,4 +33,13 @@ public interface SetMealDao {
 
     //编辑套餐
     void update(Setmeal setmeal);
+
+    List<String> findImg();
+
+    //查询所有的套餐
+    List<Setmeal> findAll();
+
+    Setmeal findDetailById(int id);
+
+    Setmeal findById(int id);
 }

@@ -31,4 +31,15 @@ public interface SetMealService {
 
     //编辑套餐
     void update(Setmeal setmeal, Integer[] checkgroupIds);
+
+    //获取db图片
+    List<String> findImg();
+
+    //查询所有的套餐
+    List<Setmeal> findAll();
+
+    //查询套餐详情
+    Setmeal findDetailById(int id);
+
+    Setmeal findById(int id);
 }
