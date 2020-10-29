@@ -55,6 +55,7 @@ public class SetmealMobileController {
     @GetMapping("/findById")
     public Result findById(int id) {
         Setmeal setmeal = setMealService.findById(id);
-        return new Result(true, "");
+        setmeal.setImg(QiNiuUtils.DOMAIN+setmeal.getImg());
+        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
     }
 }

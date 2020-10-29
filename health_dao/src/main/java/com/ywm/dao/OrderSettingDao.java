@@ -23,4 +23,5 @@ public interface OrderSettingDao {
     //通过月份查询预约设置信息
     List<OrderSetting> getOrderSettingByMonth(Map map);
 
+    int editReservationsByOrderDate(OrderSetting orderSetting);
 }

@@ -14,6 +14,12 @@
     <update id="updateOrderNumber">
         update t_ordersetting set number=#{number} where orderDate = #{orderDate}
     </update>
+    <update id="editReservationsByOrderDate">
+       update t_ordersetting
+       set reservations = reservations+1
+       where orderDate = #{orderDate}
+       and number>reservations
+    </update>
 
     <select id="findByOrderDate" resultType="com.ywm.pojo.OrderSetting">
         select * From t_orderSetting where orderDate = #{orderDate}
