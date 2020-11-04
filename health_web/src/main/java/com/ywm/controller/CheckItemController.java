@@ -7,6 +7,7 @@ import com.ywm.entity.PageResult;
 import com.ywm.entity.QueryPageBean;
 import com.ywm.entity.Result;
 import com.ywm.pojo.CheckItem;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class CheckItemController {
 
     //新增检查项
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('CHECKITEM_ADD')")
     public Result add(@RequestBody CheckItem checkItem) {
         checkItemService.add(checkItem);
         return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);

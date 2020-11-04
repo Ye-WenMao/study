@@ -90,6 +90,11 @@
     <select id="findById" resultType="com.ywm.pojo.Setmeal">
         select * from t_setmeal where id = #{id}
     </select>
+    <select id="findSetMealCount" resultType="java.util.Map">
+        select s.name,t.value from t_setmeal s, (
+            select setmeal_id,count(1) value from t_order group by setmeal_id
+        ) t where s.id=t.setmeal_id
+    </select>
 
 </mapper>
 

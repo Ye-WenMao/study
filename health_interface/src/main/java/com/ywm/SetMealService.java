@@ -6,6 +6,7 @@ import com.ywm.exception.HealthException;
 import com.ywm.pojo.Setmeal;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: YEWENMAO
@@ -18,7 +19,7 @@ import java.util.List;
 public interface SetMealService {
 
     //添加套餐
-    void add(Setmeal setmeal, Integer[] checkgroupIds);
+    Integer add(Setmeal setmeal, Integer[] checkgroupIds);
 
     //分页查询套餐
     PageResult<Setmeal> findPage(QueryPageBean queryPageBean);
@@ -42,4 +43,6 @@ public interface SetMealService {
     Setmeal findDetailById(int id);
 
     Setmeal findById(int id);
+
+    List<Map<String, Object>> findSetMealCount();
 }

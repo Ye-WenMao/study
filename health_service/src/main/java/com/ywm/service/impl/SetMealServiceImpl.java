@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: YEWENMAO
@@ -32,17 +33,17 @@ public class SetMealServiceImpl implements SetMealService {
      */
     @Transactional
     @Override
-    public void add(Setmeal setmeal, Integer[] checkgroupIds) {
+    public Integer add(Setmeal setmeal, Integer[] checkgroupIds) {
         setMealDao.add(setmeal);
 
+        Integer setmealId = setmeal.getId();
         //套餐与检查组的关系
         if (checkgroupIds != null) {
             for (Integer checkgroupId : checkgroupIds) {
-
-                Integer setmealId = setmeal.getId();
                 setMealDao.addSetMealCheckGroup(setmealId, checkgroupId);
             }
         }
+        return setmealId;
     }
 
     /**
@@ -143,5 +144,10 @@ public class SetMealServiceImpl implements SetMealService {
     @Override
     public Setmeal findById(int id) {
         return setMealDao.findById(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> findSetMealCount() {
+        return setMealDao.findSetMealCount();
     }
 }

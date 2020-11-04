@@ -52,6 +52,11 @@ public class SetmealMobileController {
         return new Result(true,MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
     }
 
+    /**
+     * 根据ID查询套餐信息
+     * @param id
+     * @return
+     */
     @GetMapping("/findById")
     public Result findById(int id) {
         Setmeal setmeal = setMealService.findById(id);

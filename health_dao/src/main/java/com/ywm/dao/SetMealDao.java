@@ -5,6 +5,7 @@ import com.ywm.pojo.Setmeal;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: YEWENMAO
@@ -42,4 +43,7 @@ public interface SetMealDao {
     Setmeal findDetailById(int id);
 
     Setmeal findById(int id);
+
+    List<Map<String, Object>> findSetMealCount();
+
 }

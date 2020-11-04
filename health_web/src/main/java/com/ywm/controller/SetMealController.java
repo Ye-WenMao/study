@@ -45,6 +45,11 @@ public class SetMealController {
         return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
     }
 
+    /**
+     * 上传图片
+     * @param imgFile
+     * @return
+     */
     @PostMapping("/upload")
     public Result upload(@RequestBody MultipartFile imgFile) {
 
